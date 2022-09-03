@@ -1,8 +1,13 @@
-Static Data Members
-    Meaning?
-    Implication?
-    Warning?
+--------------------
+Static Data Members:
+---------------------
+    Meaning? Have only one copy that is shared by all the objects of the class.
+    Implication? Modifying value by one object, modifies values for other objects as well.
+    Warning? Accessing static data members by the reference gives warning since they belong to class, its good practice to access them by ClassName
+
+-----------------
 Static Function?
+---------------
     Meaning? -> Doesn't require objects for their invocation, can be called directly via class names
     Where are they used?
         Utility stateless fns example Math.min, Math.max, Arrays.sort, Arrays.fill
@@ -20,5 +25,209 @@ Static Function?
     Can non-static fn, use static data member? Why? -> Yes, because we have extra information available (not less)
     Can non-static fn, use static fn? Why? -> same as above.
 
+--------------    
+Static Class
+------------
+
+Static class is used as inner class, so we don’t have to create object of outer class.
+Otherwise we will have to create object of outer class and then call new on inner class to create its object. 
+If inner class is static we can directly write:
+InnerClass ic = oc.new InnerClass();
+If inner class is not static.
+Ex: OuterClass oc = new OuterClass();InnerClass ic = oc.new InnerClass(); // creating outerclass object and then calling new on it to create inner class instance.
+
+-----------------------------
+Static block
+-------------------------------
+Static blocks are used to initialise static data members.
+They can be assumed as the constructor for static members.
+
+
+----------------------------------------------------------
+Conclusion on static functions and members they can access: 
+-------------------------------------------------------------
+static functions ---> static datamemebers and other static function.
+non static function ----> static and non static datamembers and functions.
+
+--------------------------------------------------------
+Behaviour of static/non static function wrt Inheritance.
+--------------------------------------------------------
+static function use method hiding and non static function use method overriding. Static function cannot be overridden and does not support runtime polymorphism. 
+static funtion are called using static linking. 
+while non static funtion are result of dynamic linking.
+static functions.
+
+--------------------------------------------------------
+Behaviour of static block and instance initialiser block Inheritance.
+--------------------------------------------------------
+Static block runs only one time when the class is loaded.
+
+Instance intiliaser blocks is run each and every time object id created.
+When a object is created the instance initialiser block is copied in the each constructor of the class after the this()/super() statement. 
+
+    Why use static block? 
+        *  To initialise dynamic properties whose intilisation depends on complex factor ex: reading db configuration from a file. 
+    Why use instance intialiser block when constructor is there?
+        * There could be common code that needs to be executed in each and every constructor. So instead of copying it everywhere we write in instance      intialise block.
+
+---------------------------------------
+Concept of Constructor and its features
+----------------------------------------
+    An interface cannot have the constructor. // There is no concept of non-static datamembers in interfaces hence no need of constructor. 
+    A constructor cannot be abstract, static, final, native, strictfp, or synchronized
+    A constructor can be overloaded.
+    Constructors cannot return a value.
+    Constructors do not have a return type; not even void.
+    An abstract class can have the constructor.
+    Constructors name must be similar to that of the class name inside which it resides.
+    Constructors are automatically called when an object is created. 
+
+-------------------------
+Concept of this keyword:
+-------------------------
+
+In static function: this keyword is not available.
+    Why? 'this' keyword is property of an object. While static function belong to a class.
+In non-static functions: Wheneven a function is called 'this' keyword is passed to it. And Each non static funtion has reference to its object.
+In constructor: If using this/super it should always be the first line. Both cannot be used together as both cannot be the first line.
+
+------------------------------
 Inheritance & Polymorphism
     P and C - all cases, except abstract fns and class
+
+------------------
+GOLDEN rule: 
+----------------------
+
+Rule 1: Compiler makes decision based on the reference.
+Rule 2: Runtime makes decision based on the object the function/datamember is called upon.
+Rule 3: In case of conflict it is resolved using reference. 
+
+
+---------------------------------------------
+----------------
+Final keyword
+----------------
+
+    Final class: A class declared as final cannot be inherited.
+    Final datamembers: Can be intialised only once. Cannot be modified. If not initialised then compile time error.
+        static/non static final: can be initialised when declared
+        blank static/non static final: static can be initialised in static block
+                                       and no static can be intialised in constructor or instance initialiser block.
+    Final static/nonstatic methods: cannot be hidden/overriden. And compiler will throw error if we try to do it.
+
+--------------------
+Abstract
+---------------------
+
+    Abstract class: Cannot create object of abstract class.
+                    A class can have full implementation(constructor,datamemebers,static/nonstatic fn's) and still can be declared abstract to enforce that creation of objects is not allowed.
+                    If a abstract class contain any abstract non static methods then either the class inheriting should provide the implementation of it or should mark itself as abstract as well.
+                    A static method cannot be abstract. // result in compile time error.
+                    
+----------------------------
+Interfaces
+----------------------------
+ 
+Contains all functions as abstract. And class implementing it should provide method defination defination.
+Contains on static data members which are final and static by default.
+We cannot create object of interface.
+
+----------------------------------------------------------------------------
+
+1. Final 
+    variable = = values can't be reassigned
+    data member = values can't be reassigned (either assign in parsing or constructor / static block)
+    fn = Can't override the fn in derived class (overloading is allowed in same class and derived class)
+    class = can't derive the final class
+2. Abstract
+    class = can't make an object of abstract class (for instance Employee class derived into HREmployee or Software Employee. Employee class should be abstracrt, because not a type in itself, just created to absorb common functions of HREmployee and SoftwareEmployee)
+    fn = fn which doesn't have code (only API)
+    implications
+        Why required? -> To absorb common code of deriving Classes
+        If fn is abstract, will the containing class be necessarily abstract? Yes
+        If class is abstract, will it necessarily have abstract functions? No
+3. interface
+    -> When all fns are abstract and there are no common instance data members to share
+    -> Similar to abstract classes
+    -> An extreme version of abstract classes
+        -> when all fns are abstract
+        -> no common instance data members
+    -> If a class implements an interface but doesn't provide body for all functions, then it will become abstract
+    -> Can we make an object of interface? No
+    -> Can an interface provide body for any function? Yes, since Java8, using the default keyword it is possible (although advised to not use). Java provided for this backword compatibility. Not to be used often.
+    -> Can an interface have data members? Yes, but not as instance data members, can be used as static data members
+4. abstract class vs interface (4:32 to 4:42 for notes)
+    -> Abstract classes can have implementations for some or all functions, interfaces are supposed to have all functions with no implementations
+    -> Abstract classes can have instance data members, interfaces can only have static data members
+    -> A class can't derive two abstract classes, but can implement any number of interfaces
+    -> Interface data members are final and static
+
+Questions
+    Q1. What is final variable?
+    Q2. What is final data member?
+    Q3. When are they initialized?
+    Q4. What is final fn? -> Can't override them in derived class
+    Q5. What is a final class? -> Can't derive the final class
+    Q6. What is abstract class? -> Can't make object
+    Q7. What is abstract fn? -> A fn with no body.
+    Q8. Can an abstract class have 0 abstract fns? -> Yes
+    Q9. Can a class having abstract fns be market non-abstract? -> False. Have to mark the class abstract or provide implementations for all abstract fns
+    Q10. Ctor in abstract class? -> allowed
+    Q11. Why abstract fn? -> TO enforce the deriving classes to provide implementations
+    Q12. Why abstract class? -> To represent the common concept and absorb common functionality or data memebrs?
+    -----------------------------------------------------------------
+
+-----------------------
+Learn about enum on own
+------------------------
+
+
+
+--------------------------------------------------------
+Object creation - steps, this, this chaining
+        Space allocation - java Defaults
+        Parsing - Non-dynamic Class creator Defaults
+        Default ctor - Dynamic class creator Defaults
+        Parametrized ctor - Class user given values
+Inheritance & Polymorphism
+    P and C - all cases, except abstract fns and class
+    final - variable, data member, fn, class
+    abstract - fn & abstract class
+    super, ctor chaining
+    interface
+    interface vs abstract class
+----------------------------------------------------------------
+Object creation
+    1. Space allocation & this assignment
+        Space is allocated for all non-static data members. this is set equal to the new object's address
+        Data members are assigned default values (JAVA)
+            0 = byte, short, int, long
+            0.0 = float, double
+            false = boolean
+            '\0' = char
+            null = everything else
+    2. Parsing
+        Class creator's default values are assigned to data members (but only such values which are non-dynamic)
+        e.g. growth multiple is set to 1.5 in ArrayList
+        e.g. rehashing threshold is set in HashMap to 0.5
+    3. Constructor
+        3.1 Default = Class creator's default values are assigned to data members (but only such values which are dynamic such as student folder or dbconnection)
+        3.2 Parametrized = For class user to set values which he requires
+        3.3 If no constructor is provided, Java adds the default ctor by itself
+        3.4 If class creator, provides a Parametrized ctor (then Java won't add default ctor)
+Inheritance & Polymorphism
+    P and C - all cases
+    Rules
+        1. Compiler (LHS, Reference) compiles
+        2. JRE (RHS, instance) and runs functions
+        3. Conflict resolved by Reference
+    1. P ref, P inst
+    2. C ref, C inst
+    3. P ref, C inst  (1 and 3 are polymorphic examples, function overriding)
+    4. C ref, P inst => not allowed
+    5. Run-time polymorphism -> calling fun in case 1 and 3 (fn overriding)
+    6. Compile-time polymorphism -> Arrays.sort multiple (fn overloading)
+
+                    
+    
