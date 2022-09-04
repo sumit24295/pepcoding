@@ -267,8 +267,6 @@ Enforces to create only one object of the class.
     Providing a static data member S whose type is same as the class in which it is defined. // will have only one copy.
     Providing static function that can create the object iff S is null. Else return S. // use synchronized block. Refer example of this lecture.
 
-
-
 ------------------------------------------
 3 Chain Of Responsibility Design Pattern:
 ------------------------------------------
@@ -305,6 +303,27 @@ In case of inheritance we will have to create m^n classes.
     3.Do this for all n behaviour. 
 
     Refer example of this lecture to understand implementation.
+    
+----------------------------
+5 Observer Design Pattern:
+----------------------------
+
+There are two main entities in this Design pattern, Subject and Observer.
+The observers are registered with the subject and any change in subject's data notifies each and every registered observer. Each observer after getting notified perform the needed action.
+
+    Steps to implement:
+
+    1. Create Observer as a interface having onUpdate function.
+    2.  2.1 Create a abstract class Subject, which has reference of List of all the registered observer as its data member. 
+        2.2 Also provide register and unregister observer functions and their implementation, which adds/deletes particular observer from the list.
+        2.3 Provide notifyAll function, where in iterate over the list of observer and call their onUpdate function.
+    3.  3.1 Create concrete class C1 extending subject class. Now for any change of data of C1, call notifyAll function.
+        3.2 Create multiple classes implementing the observer interface and providing defination of onUpdate function.
+
+    Use case: CricketData (run, wickets, overs) as Concrete class implemeting subject. And various displays like ScoreCardDisplay, NetRunRateDisplay,                     FutureRunPredictionDisplay. 
+    Refer example of this lecture to understand above implementation.
+
+    
 
 
 
