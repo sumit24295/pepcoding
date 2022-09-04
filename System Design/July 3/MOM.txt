@@ -236,16 +236,18 @@ Inheritance & Polymorphism
 Design Patterns
 =================
 
-Adapter Design Pattern:
-
+--------------------------
+1 Adapter Design Pattern:
+--------------------------
 Data Provider/DP/Adaptee: Provides data in format 1 ex:xml
 Data consumer/DC/Client: Expects data in format 2 ex: json
 
 Introduce a adapter DataProviderToDataConsumer that converts format 1 to format 2.
 
-Steps to implements:
-Adapter implements the interface and references the DP object(example has DP object as instance variable). 
-Example: The implemented function has the  body such that // do some processing using DP object(uses format 1) and return format 2
+    Steps to implements:
+    
+    Adapter implements the interface and references the DP object(example has DP object as instance variable). 
+    Example: The implemented function has the  body such that // do some processing using DP object(uses format 1) and return format 2
 
 DC(Client) references the interface.
 Since it references the interface it can call the the method implemented by adapter to get data in format 2.
@@ -254,6 +256,39 @@ Read this for better understanding:
 https://www.educative.io/answers/what-is-the-adapter-design-pattern
 
 
+----------------------------
+2 Singleton Design Pattern:
+----------------------------
+Enforces to create only one object of the class.
 
+    Steps to implement:
+    
+    Make constructor as private. //ensures object cannot be created from outside class
+    Providing a static data member S whose type is same as the class in which it is defined. // will have only one copy.
+    Providing static function that can create the object iff S is null. Else return S. // use synchronized block. Refer example of this lecture.
+
+
+
+------------------------------------------
+3 Chain Of Responsibility Design Pattern:
+------------------------------------------
+Multiple classes are chained together in a sequential manner(like a linked list).
+When a req comes it is handled by the first class of chain. If request cannot be handled by the class its passed to next class in the chain and so on.
+Use case: banking service. Req goes to telephone representative ---> branch manager ---> site manager ---> general manager.
+
+Steps to implement:
+
+Make a abstract class containing:
+1. reference to itself // which points to next class responsible to handle request.
+2. abstract handler fn's.
+
+Make concrete classes extending this abstract class and implement the handler function.
+Handler function calls next.handlerFunction(req) if it is not able to handle the request 
+
+Refer example of this lecture to understand implementation.
+
+----------------------------
+4 Strategy Design Pattern:
+----------------------------
                     
     
