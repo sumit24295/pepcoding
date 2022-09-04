@@ -290,5 +290,22 @@ Refer example of this lecture to understand implementation.
 ----------------------------
 4 Strategy Design Pattern:
 ----------------------------
-                    
+
+Based on principle about preferring composition over inheritance.
+Can be thought of having n number of buckets where each bucket defines a type of behaviour.
+Each bucket have m ways to express that behaviour.
+
+Thus it gives us m^n combination of creating object with only m*n classes.
+In case of inheritance we will have to create m^n classes.
+
+    Steps to implement:
+
+    1.The class has reference(usually as data members) to interfaces IB of each type of behaviour B.
+    2.For a behaviour B, define all m class implementing interface IB and define behaviour in a way they wants.
+    3.Do this for all n behaviour. 
+
+    Refer example of this lecture to understand implementation.
+
+
+
     
