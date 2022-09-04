@@ -229,5 +229,31 @@ Inheritance & Polymorphism
     5. Run-time polymorphism -> calling fun in case 1 and 3 (fn overriding)
     6. Compile-time polymorphism -> Arrays.sort multiple (fn overloading)
 
+
+===================================================================================================================
+
+=================
+Design Patterns
+=================
+
+Adapter Design Pattern:
+
+Data Provider/DP/Adaptee: Provides data in format 1 ex:xml
+Data consumer/DC/Client: Expects data in format 2 ex: json
+
+Introduce a adapter DataProviderToDataConsumer that converts format 1 to format 2.
+
+Steps to implements:
+Adapter implements the interface and references the DP object(example has DP object as instance variable). 
+Example: The implemented function has the  body such that // do some processing using DP object(uses format 1) and return format 2
+
+DC(Client) references the interface.
+Since it references the interface it can call the the method implemented by adapter to get data in format 2.
+
+Read this for better understanding:
+https://www.educative.io/answers/what-is-the-adapter-design-pattern
+
+
+
                     
     
